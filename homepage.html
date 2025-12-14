@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My Personal Site</title>
+
+<style>
+/* ===== Reset & Base ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+/* Increase spacing between paragraphs */
+p {
+    margin-bottom: 10px; /* Adjust this value to your liking */
+}
+
+/* Link styling */
+a {
+    text-decoration: none; /* Remove underline */
+    color: antiquewhite; /* Set link color to antique white */
+    transition: color 0.3s ease; /* Smooth transition for color change on hover */
+}
+
+/* Visited link color (slightly darker than antique white) */
+a:visited {
+    color: #d7c9a3; /* A darker shade of antique white */
+}
+
+/* Hover effect */
+a:hover {
+    color: #f4e0b8; /* A slightly lighter shade for hover effect */
+    transition-duration: 1s;
+}
+
+/* Optional: Focus state for accessibility */
+a:focus {
+    outline: 2px solid #f4e0b8; /* Outline color for focus */
+}
+
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  overflow: hidden;
+  background: linear-gradient(#2c3e50, #34495e); /* Dark gradient for the night sky */
+}
+
+/* ===== Landing Layout ===== */
+#landing {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+/* ===== Title ===== */
+.hero-text {
+  position: absolute;
+  top: 15%;
+  width: 100%;
+  text-align: center;
+  color: #ecf0f1;
+  z-index: 3;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-text p {
+  font-size: 1.25rem;
+  opacity: 0.85;
+}
+
+/* ===== Stars for the Sky ===== */
+@keyframes twinkle {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+.star:nth-child(odd) {
+  animation-duration: 2s;
+}
+
+.star:nth-child(even) {
+  animation-duration: 4s;
+}
+
+/* ===== Waning Crescent Moon ===== */
+.moon {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  width: 80px;
+  height: 80px;
+  background: #f0e68c; /* Moon's base color */
+  border-radius: 50%;
+  z-index: 3; /* Above other elements */
+  overflow: hidden; /* Ensure the other circle doesn't extend out */
+}
+
+.moon::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -30%; /* Move the smaller circle to the left to "cut" part of the moon */
+  width: 120%;
+  height: 100%;
+  background: #34495e; /* Dark color to create the shadow effect */
+  border-radius: 50%;
+}
+
+/* ===== Meadow ===== */
+.meadow {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 35%;
+  background: linear-gradient(#1f6f30, #2e8b57); /* Darker meadow */
+  z-index: 1;
+}
+
+/* Grass blades */
+.meadow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.05) 0 2px,
+      transparent 2px 8px
+    );
+}
+
+/* ===== Rabbit ===== */
+.rabbit {
+  position: absolute;
+  bottom: 28%;
+  left: -150px;
+  width: 120px;
+  height: 100px;
+  z-index: 2; /* 👈 ABOVE MEADOW */
+  animation: hopAcross 10s linear infinite;
+}
+
+/* Rabbit Jump Animation */
+@keyframes jump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-30px); }
+  100% { transform: translateY(0); }
+}
+
+.rabbit-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Body */
+.body {
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  width: 80px;
+  height: 50px;
+  background: #8b4513; /* Brown color */
+  border-radius: 40px;
+  box-shadow: inset -5px -5px 0 rgba(0,0,0,0.05);
+}
+
+/* Head */
+.head {
+  position: absolute;
+  bottom: 25px;
+  left: 60px;
+  width: 45px;
+  height: 40px;
+  background: #8b4513; /* Brown color */
+  border-radius: 50%;
+}
+
+/* Ears */
+.ear {
+  position: absolute;
+  width: 12px;
+  height: 40px;
+  background: #7a3f2d; /* Slightly darker brown for ears */
+  border-radius: 10px;
+  top: -10px; /* Move ears closer to the head */
+}
+
+.ear.left {
+  left: -5px; /* Move left ear closer to the center */
+  transform: rotate(50deg); /* More droopy */
+  z-index: 3; /* Left ear in front */
+}
+
+.ear.right {
+  right: -5px; /* Move right ear closer to the center */
+  transform: rotate(-50deg); /* More droopy */
+  z-index: 1; /* Right ear behind the head */
+}
+
+/* Remove pink part from the left ear (inside) */
+.ear.left::after {
+  display: none; /* Hide pink part of the left ear */
+}
+
+/* Right ear pink part */
+.ear.right::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background: #ffccd5;
+  border-radius: 10px;
+}
+
+/* Eye */
+.eye {
+  position: absolute;
+  top: 18px;
+  left: 25px;
+  width: 5px;
+  height: 5px;
+  background: #333;
+  border-radius: 50%;
+}
+
+/* Tail */
+.tail {
+  position: absolute;
+  bottom: 15px;
+  left: 5px;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* ===== Snack Ball ===== */
+.snack-ball {
+  position: absolute;
+  bottom: 26%;
+  left: 15%; /* Adjust to position in front of the rabbit */
+  width: 20px;
+  height: 20px;
+  background: #f39c12; /* Snack ball color (yellow-orange) */
+  border-radius: 50%;
+  z-index: 1;
+  animation: roll 10s linear infinite;
+}
+
+/* Snack Ball Rolling Animation */
+@keyframes roll {
+  0% { left: 15%; }
+  100% { left: 85%; }
+}
+
+/* ===== Animations ===== */
+@keyframes hopAcross {
+  0% {
+    left: -150px;
+  }
+  100% {
+    left: 110%;
+  }
+}
+
+</style>
+</head>
+
+<body>
+  <section id="landing">
+    <div class="hero-text">
+      <h1>Hi, I’m  Cappuccino</h1>
+      <p>I am a <a class="holland_lop" href="https://en.wikipedia.org/wiki/Holland_Lop">Holland Lop</a>.</p> <p> Fenna is my favourite human. I like bamboo.</p>
+    </div>
+
+    <!-- Rabbit -->
+    <div class="rabbit">
+      <div class="rabbit-inner">
+        <div class="body"></div>
+        <div class="tail"></div>
+
+        <div class="head">
+          <div class="ear left"></div>
+          <div class="ear right"></div>
+          <div class="eye"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Snack Ball -->
+    <div class="snack-ball"></div>
+
+    <!-- Meadow -->
+    <div class="meadow"></div>
+
+    <!-- Moon -->
+    <div class="moon"></div>
+  </section>
+
+  <script>
+    // Create Stars in the sky
+    function createStars() {
+      const starCount = 100;
+      const sky = document.querySelector('body');
+
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+
+        // Randomly position the stars across the screen
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.width = `${Math.random() * 3 + 2}px`;
+        star.style.height = star.style.width;
+        sky.appendChild(star);
+      }
+    }
+
+    createStars(); // Create stars on page load
+
+    // Trigger Rabbit Jump on Space key press
+    document.addEventListener('keydown', function(event) {
+      if (event.code === 'Space') {
+        const rabbitInner = document.querySelector('.rabbit .rabbit-inner');
+        rabbitInner.style.animation = 'jump 0.5s ease-in-out';
+        
+        // Remove the animation after it ends
+        setTimeout(() => {
+          rabbitInner.style.animation = ''; // Reset the animation
+        }, 500);
+      }
+    });
+  </script>
+</body>
+</html>
